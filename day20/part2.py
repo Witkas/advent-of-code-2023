@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 lines = []
-with open('20-input.txt') as f:
+with open('input.txt') as f:
     for line in f.readlines():
         lines.append(line.strip())
 
