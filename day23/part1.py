@@ -1,3 +1,6 @@
+import sys
+sys.setrecursionlimit(1000000)
+
 def print_maze(maze):
     rows = [''.join(x) for x in maze]
     print('\n'.join(rows))
@@ -78,16 +81,17 @@ def longest_path(row, col, memo, visited, maze):
         new_row, new_col = row + row_d, col + col_d
         # print_maze(maze)
         # print(f"{row}, {col} -> {new_row}, {new_col}: {is_legal_move(row, col, new_row, new_col, visited, maze)}, {is_dest_reachable(new_row, new_col, visited, maze)}")
-        if is_legal_move(row, col, new_row, new_col, visited, maze) and is_dest_reachable(new_row, new_col, visited, maze.copy()):
+        if is_legal_move(row, col, new_row, new_col, visited, maze) and is_dest_reachable(new_row, new_col, visited, maze):
             if (new_row, new_col, dir_name) not in memo:
                 visited[(new_row, new_col)] = True
                 memo[(new_row, new_col, dir_name)] = longest_path(new_row, new_col, memo, visited, maze)
                 del visited[(new_row, new_col)]
             lengths.append(memo[(new_row, new_col, dir_name)]) 
+    # print(lengths)
     return max(lengths) + 1
 
 maze = []
-with open("test.txt") as f:
+with open("input.txt") as f:
     for line in f:
         maze.append(list(line.strip()))
 
