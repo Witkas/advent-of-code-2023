@@ -31,7 +31,6 @@ def is_dest_reachable(new_row, new_col, visited, maze):
             if is_legal_move(x, y, new_x, new_y, visited, visited_maze):
                 bfs.append((new_x, new_y))
                 visited_maze[x][y] = '#'
-                # print_maze(maze)
     return False
 
 def is_legal_move(row, col, new_row, new_col, visited, maze):
@@ -64,8 +63,6 @@ def is_legal_move(row, col, new_row, new_col, visited, maze):
     if (new_row, new_col) in visited:
         return False
     
-    # Check if we can reach the destination without 
-    # stepping on any of the previous squares.
     return True
 
 def longest_path(row, col, memo, visited, maze):
@@ -75,19 +72,15 @@ def longest_path(row, col, memo, visited, maze):
         [1, 0, "down"],
         [0, -1, "left"],
     ]
-    # print(row, col)
     lengths = []
     for row_d, col_d, dir_name in directions:
         new_row, new_col = row + row_d, col + col_d
-        # print_maze(maze)
-        # print(f"{row}, {col} -> {new_row}, {new_col}: {is_legal_move(row, col, new_row, new_col, visited, maze)}, {is_dest_reachable(new_row, new_col, visited, maze)}")
         if is_legal_move(row, col, new_row, new_col, visited, maze) and is_dest_reachable(new_row, new_col, visited, maze):
             if (new_row, new_col, dir_name) not in memo:
                 visited[(new_row, new_col)] = True
                 memo[(new_row, new_col, dir_name)] = longest_path(new_row, new_col, memo, visited, maze)
                 del visited[(new_row, new_col)]
             lengths.append(memo[(new_row, new_col, dir_name)]) 
-    # print(lengths)
     return max(lengths) + 1
 
 maze = []
